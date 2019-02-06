@@ -142,6 +142,39 @@ class KnowledgeBase(object):
         """
         ####################################################
         # Student code goes here
+        if factq(fact_or_rule):
+            if (self._get_fact(fact_or_rule) != None):
+                output = "SUPPORTED BY fact:"
+                factsstring = ""
+                rulesstring = ""
+
+                if (fact_or_rule.supported_by != []):
+                	for supporter in fact_or_rule.supported_by:
+                		if factq(supporter) == True:
+                			factsstring = factsstrng + supporter.statement
+
+                		else:
+                			rulesstring = rulesstring + supporter
+
+                output = output + factsstring + rulesstring
+                return output
+
+
+
+
+            else:
+                output = "Fact is not in the KB"
+                return output
+
+
+        else:
+            if (self._get_rule(fact_or_rule) != None):
+                return
+            else:
+                output = "Rule is not in the KB"
+                return output
+
+
 
 
 class InferenceEngine(object):
