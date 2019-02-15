@@ -2,7 +2,7 @@ TESTS WITH ERRORS
 test03 (gradingtests.UnitTests)
 Traceback (most recent call last):
   File "/Users/k2i/academics/automatedgradingapp/app/testing/kb-inference-ec/gradingtests.py", line 73, in test03
-    self.assertEqual(self.KB.kb_explain(fact4), answer1)
+    self.compare(self.KB.kb_explain(fact4), answer1)
   File "/Users/k2i/academics/automatedgradingapp/app/testing/kb-inference-ec/student_code.py", line 157, in kb_explain
     rulesstring = rulesstring + supporter
 TypeError: can only concatenate str (not "list") to str
