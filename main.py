@@ -65,6 +65,8 @@ class KBTest(unittest.TestCase):
         self.KB.facts.extend([f0,f1,f2,f3,f4,f5])
         self.KB.rules.extend([r1,r2,r3,r4,r5])
 
+      #  print(f0.supported_by)
+
         self.expected = '\
 fact: (eats nyala leaves)\n\
   SUPPORTED BY\n\

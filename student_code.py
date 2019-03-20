@@ -130,52 +130,80 @@ class KnowledgeBase(object):
         # Implementation goes here
         # Not required for the extra credit assignment
 
+
     def kb_explain(self, fact_or_rule):
         """
         Explain where the fact or rule comes from
-
         Args:
             fact_or_rule (Fact or Rule) - Fact or rule to be explained
-
         Returns:
             string explaining hierarchical support from other Facts and rules
         """
         ####################################################
         # Student code goes here
-        if factq(fact_or_rule):
-            if (self._get_fact(fact_or_rule) != None):
-                output = "SUPPORTED BY fact:"
-                factsstring = ""
-                rulesstring = ""
-
-                if (fact_or_rule.supported_by != []):
-                	for supporter in fact_or_rule.supported_by:
-                		if factq(supporter) == True:
-                			factsstring = factsstrng + supporter.statement
-
-                		else:
-                			rulesstring = rulesstring + supporter
-
-                output = output + factsstring + rulesstring
+        indent = 0
+        if isinstance(fact_or_rule, Rule):
+            fact_or_rule = self._get_rule(fact_or_rule)
+            if fact_or_rule in self.rules:
+                ouput = "rule: (" + fact_or_rule.lhs[0]
+                for left in fact_or_rule.lhs[1:]:
+                    output += ", " + str(left)
+                output += ") -> " + str(fact_or_rule.rhs)
+                if fact_or_rule.asserted:
+                    output += " ASSERTED"
+                output += "\n"
+                if len(fact_or_rule.supported_by) > 0:
+                    for support in fact_or_rule.supported_by:
+                        output += self.supporter(indent, support)
                 return output
-
-
-
-
             else:
-                output = "Fact is not in the KB"
+                out = "Rule is not in the KB"
+                return out
+        elif isinstance(fact_or_rule, Fact):
+            fact_or_rule = self._get_fact(fact_or_rule)
+            if fact_or_rule in self.facts:
+                output = "fact: " + str(fact_or_rule.statement)
+                if fact_or_rule.asserted:
+                    output = output + " " + "ASSERTED"
+                output = output + "\n"
+                if len(fact_or_rule.supported_by) > 0:
+                    for support in fact_or_rule.supported_by:
+                        output += self.supporter(indent, support)
                 return output
-
-
-        else:
-            if (self._get_rule(fact_or_rule) != None):
-                return
             else:
-                output = "Rule is not in the KB"
-                return output
+                out = "Fact is not in the KB"
+                return out
 
-
-
+    def supporter(self, ind, pair):
+        indentation = ind + 1
+        sup = ""
+        for i in range(indentation):
+            sup += "  "
+        sup = sup + "SUPPORTED BY\n" 
+        fact1 = pair[0]
+        rule1 = pair[1]
+        for i in range(indentation):
+            sup += "  "
+        sup += "  fact: " + str(fact1.statement)
+        if fact1.asserted:
+            sup = sup + " ASSERTED"
+        sup += "\n"
+        if len(fact1.supported_by) > 0:
+            for support in fact1.supported_by:
+                sup += self.supporter(indentation+1, support)
+        for i in range(indentation):
+                sup += "  "
+        sup += "  rule: (" + str(rule1.lhs[0]) 
+        for left in rule1.lhs[1:]:
+            sup += ", " + str(left)
+        sup += ") -> " + str(rule1.rhs)
+        if rule1.asserted:
+            sup = sup + " ASSERTED"
+        sup += "\n"
+        if len(rule1.supported_by) > 0:
+            for support in rule1.supported_by:
+                sup += self.supporter(indentation+1, support)
+        return sup
 
 class InferenceEngine(object):
     def fc_infer(self, fact, rule, kb):
