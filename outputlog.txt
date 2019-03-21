@@ -1,25 +1,6 @@
 TESTS WITH ERRORS 
-test03 (gradingtests.UnitTests)
-Traceback (most recent call last):
-  File "/Users/k2i/academics/automatedgradingapp/app/testing/kb-inference-ec/gradingtests.py", line 73, in test03
-    self.compare(self.KB.kb_explain(fact4), answer1)
-  File "/Users/k2i/academics/automatedgradingapp/app/testing/kb-inference-ec/student_code.py", line 157, in kb_explain
-    rulesstring = rulesstring + supporter
-TypeError: can only concatenate str (not "list") to str
-
 -------------------------------
 TESTS FAILED  
-test04 (gradingtests.UnitTests)
-Traceback (most recent call last):
-  File "/Users/k2i/academics/automatedgradingapp/app/testing/kb-inference-ec/gradingtests.py", line 135, in test04
-    self.compare(self.expected, actual)
-  File "/Users/k2i/academics/automatedgradingapp/app/testing/kb-inference-ec/gradingtests.py", line 18, in compare
-    '"{0}" ({1} lead spaces)'.format(a, len(a) - len(a.strip())))
-AssertionError: '"fact: (eats nyala leaves)" (0 lead spaces)' != '"SUPPORTED BY fact:" (0 lead spaces)'
-- "fact: (eats nyala leaves)" (0 lead spaces)
-+ "SUPPORTED BY fact:" (0 lead spaces)
-
-
 -------------------------------
 TESTS SKIPPED 
 -------------------------------
